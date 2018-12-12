@@ -1,6 +1,7 @@
 'use strict'
 
 const Project = use('App/Models/Project')
+const AuthorizationService = use('App/Services/AuthorizationService')
 
 class ProjectController {
 
@@ -29,6 +30,28 @@ class ProjectController {
 
         // save to db
         await user.projects().save(project)
+        return project
+
+    }
+
+    async destroy({ request, response, auth, params }) {
+
+        const { id } = params
+        // gets authenticated user
+        const user = await auth.getUser()
+
+        // gets param from url /:id
+
+        // finds projects of specific id
+        const project = await Project.find(id)
+
+        // check if project is owned by authed user
+        AuthorizationService.verifyPermission(project, user)
+
+        // delete it
+        await project.delete()
+
+        // return deleted project
         return project
 
     }
