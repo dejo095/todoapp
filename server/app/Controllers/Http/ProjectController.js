@@ -34,7 +34,7 @@ class ProjectController {
 
     }
 
-    async destroy({ request, response, auth, params }) {
+    async destroy({ request, auth, params }) {
 
         const { id } = params
         // gets authenticated user
@@ -54,6 +54,18 @@ class ProjectController {
         // return deleted project
         return project
 
+    }
+
+    async update({ request, auth, params }) {
+
+        const user = await auth.getUser()
+        const { id } = params
+        const project = await Project.find(id)  // finds projects of specific id
+        AuthorizationService.verifyPermission(project, user) // check if project is owned by authed user
+
+        project.merge(request.only('title'))
+        await project.save()
+        return project
     }
 
 }
