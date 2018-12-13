@@ -1,12 +1,14 @@
 <template>
   <v-app>
-    <v-toolbar app>
-    </v-toolbar>
-    <router-view/>
+      <div id="app">
+        <toolbar/>
+        <router-view/>
+      </div>
   </v-app>
 </template>
 
 <script>
+import Toolbar from './components/Toolbar.vue'
 
 export default {
   name: 'App',
@@ -14,6 +16,9 @@ export default {
     return {
       //
     }
+  },
+  components: {
+      Toolbar,
   }
 }
 </script>
