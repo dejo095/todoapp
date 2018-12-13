@@ -9,6 +9,16 @@ const AuthorizationService = use('App/Services/AuthorizationService')
  */
 class TaskController {
 
+    async index({ request, auth, params }) {
+
+        const user = await auth.getUser()
+        const { id } = params
+        const project = await Project.find(id)
+        AuthorizationService.verifyPermission(project, user)
+        return await project.tasks().fetch()
+
+    }
+
     async create ({ request, auth, params }) {
 
         const user = await auth.getUser()
