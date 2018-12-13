@@ -39,6 +39,46 @@ class TaskController {
 
     }
 
+    async update({ request, auth, params }) {
+
+        const user = await auth.getUser()
+        const { id } = params
+        const task = await Task.find(id)
+        const project = await task.project().fetch()
+        AuthorizationService.verifyPermission(project, user)
+
+        task.merge(request.only([
+            'description',
+            'completed'
+        ]))
+        await task.save()
+        return task
+
+    }
+
+    async destroy({ request, auth, params }) {
+
+        // gets authenticated user
+        const user = await auth.getUser()
+
+        // gets param from url /:id
+        const { id } = params
+
+        // finds task of specific id
+        const task = await Task.find(id)
+
+        // check if project is owned by authed user
+        const project = await task.project().fetch()
+        AuthorizationService.verifyPermission(project, user)
+
+        // delete it
+        await task.delete()
+
+        // return deleted task
+        return task
+
+    }
+
 
 }
 
