@@ -17,10 +17,14 @@ export default {
                 password: state.registerPassword,
             }).then(({ data }) => {
                 commit('setToken', data.token); // sets token in state
-                router.push('/'); // redirects
+                router.push('/');
             }).catch(() => {
                 commit('setRegisterError', 'An error occured during registration!');
             });
+        },
+        logout({ commit }) {
+            commit('setToken', null);
+            router.push('/login');
         },
     },
     getters: {
