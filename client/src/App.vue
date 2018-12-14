@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <toolbar/>
-    <router-view class="mt-5"/>
+    <router-view class="main"/>
   </v-app>
 </template>
 
@@ -20,3 +20,8 @@ export default {
   },
 };
 </script>
+<style lang="stylus" scoped>
+    .main
+        margin-top 80px
+</style>
+
