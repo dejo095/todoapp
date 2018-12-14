@@ -1,24 +1,22 @@
 <template>
   <v-app>
-      <div id="app">
-        <toolbar/>
-        <router-view/>
-      </div>
+    <toolbar/>
+    <router-view class="mt-5"/>
   </v-app>
 </template>
 
 <script>
-import Toolbar from './components/Toolbar.vue'
+import Toolbar from './components/Toolbar.vue';
 
 export default {
   name: 'App',
-  data () {
+  data() {
     return {
       //
-    }
+    };
   },
   components: {
-      Toolbar,
-  }
-}
+    Toolbar,
+  },
+};
 </script>
